@@ -1,0 +1,8 @@
+D:\Repos\WindTunnel\Proxy\bin\x64\Release\Proxy.dll
+D:\Repos\WindTunnel\Proxy\bin\x64\Release\Proxy.pdb
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\Proxy.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\HaiFeng.Properties.Resources.resources
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\Proxy.csproj.GenerateResource.Cache
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\Proxy.csproj.CoreCompileInputs.cache
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\Proxy.dll
+D:\Repos\WindTunnel\Proxy\obj\x64\Release\Proxy.pdb

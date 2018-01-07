@@ -1,0 +1,2 @@
+D:\Repos\WindTunnel\WT_Core\obj\Release\WT_Core.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\WT_Core\obj\Release\WT_Core.csproj.CoreCompileInputs.cache

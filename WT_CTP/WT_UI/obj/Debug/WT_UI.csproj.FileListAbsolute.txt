@@ -1,0 +1,17 @@
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.csprojResolveAssemblyReference.cache
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.FormWorkSpace.resources
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.csproj.GenerateResource.Cache
+E:\WindTunnel\WT_UI\bin\Debug\WT_UI.dll
+E:\WindTunnel\WT_UI\bin\Debug\WT_UI.pdb
+E:\WindTunnel\WT_UI\bin\Debug\WT_Core.dll
+E:\WindTunnel\WT_UI\bin\Debug\WT_CTP.dll
+E:\WindTunnel\WT_UI\bin\Debug\WT_Strategy.dll
+E:\WindTunnel\WT_UI\bin\Debug\Proxy.dll
+E:\WindTunnel\WT_UI\bin\Debug\WT_Core.pdb
+E:\WindTunnel\WT_UI\bin\Debug\WT_CTP.pdb
+E:\WindTunnel\WT_UI\bin\Debug\WT_Strategy.pdb
+E:\WindTunnel\WT_UI\bin\Debug\Proxy.pdb
+E:\WindTunnel\WT_UI\bin\Debug\Proxy.xml
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.dll
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.pdb
+E:\WindTunnel\WT_UI\obj\Debug\WT_UI.csproj.CoreCompileInputs.cache

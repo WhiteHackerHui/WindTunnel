@@ -1,0 +1,8 @@
+E:\WindTunnel\WT_Strategy\bin\Debug\WT_Strategy.dll
+E:\WindTunnel\WT_Strategy\bin\Debug\WT_Strategy.pdb
+E:\WindTunnel\WT_Strategy\bin\Debug\WT_Core.dll
+E:\WindTunnel\WT_Strategy\bin\Debug\WT_Core.pdb
+E:\WindTunnel\WT_Strategy\obj\Debug\WT_Strategy.csprojResolveAssemblyReference.cache
+E:\WindTunnel\WT_Strategy\obj\Debug\WT_Strategy.dll
+E:\WindTunnel\WT_Strategy\obj\Debug\WT_Strategy.pdb
+E:\WindTunnel\WT_Strategy\obj\Debug\WT_Strategy.csproj.CoreCompileInputs.cache

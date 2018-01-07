@@ -1,0 +1,757 @@
+﻿<Window
+        x:Class="WT_Platform.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WT_Platform"
+        xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml" 
+        mc:Ignorable="d"
+        Title="WindTunnel System By wh_wing" Height="1000" Width="1600" WindowState="Maximized">
+    
+    <Window.Resources>
+
+        <Style TargetType="TextBlock">
+            <!--<Setter Property="FontSize" Value="14"/>-->
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <!--多空显示格式：多空、买卖-->
+        <Style x:Key="mySideStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="50"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="Short">
+                    <Setter Property="Foreground" Value="Green"/>
+                </Trigger>
+                <Trigger Property="Text" Value="Long">
+                    <Setter Property="Foreground" Value="Red"/>
+                </Trigger>
+                <Trigger Property="Text" Value="Sell">
+                    <Setter Property="Foreground" Value="Green"/>
+                </Trigger>
+                <Trigger Property="Text" Value="Buy">
+                    <Setter Property="Foreground" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!--价格显示格式-->
+        <Style x:Key="myPriceStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="MinWidth" Value="50"/>
+        </Style>
+
+        <!--盈亏显示格式-->
+        <Style x:Key="myPnlStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="50"/>
+            <!--<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource dataColorConverter}}"/>-->
+        </Style>
+
+        <!--每隔两行交替背景-->
+        <Style TargetType="ListView">
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="ListView.ItemContainerStyle">
+                <Setter.Value>
+                    <!--交替行背景设置-->
+                    <Style TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <Setter Property="Background" Value="AntiqueWhite"/>
+                            </Trigger>
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <Setter Property="Background" Value="Beige"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" Value="#FF9ECEE7"/>
+                                <!--<Setter Property="Foreground" Value="White"/>-->
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style >
+
+        <!--GridView列头的样式-->
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="#FF007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!--自定义Tab样式-->
+        <Style x:Key="myTabControlStyle" TargetType="{x:Type TabControl}">
+            <Setter Property="TabStripPlacement" Value="Left"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!--listview中列名的数据模板-->
+        <DataTemplate x:Key="myHeaderTemplate">
+            <DockPanel Width="auto">
+                <TextBlock FontSize="12" FontWeight="Bold">
+                    <TextBlock.Text>
+                        <Binding StringFormat="{}{0:F2}"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DockPanel>
+        </DataTemplate>
+
+        <!--MarketDataGridView-->
+        <GridView x:Key="MarketDataGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <!--<GridViewColumn Header="No." DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}},
+            Converter={StaticResource rowNumberConverter}}" Width="40" />-->
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}" Width="80"/>
+            <GridViewColumn Header="最新价" DisplayMemberBinding="{Binding Path=LastPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="成交量" DisplayMemberBinding="{Binding Path=Volume,StringFormat='0.'}" Width="auto"/>
+            <GridViewColumn Header="成交额" DisplayMemberBinding="{Binding Path=Turnover,StringFormat='0.'}" Width="auto"/>
+            <GridViewColumn Header="买一量" Width="auto">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=BidVolume1,StringFormat='0.'}" Background="LightGreen" MinWidth="80"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="买一价" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=BidPrice1,StringFormat='0.00'}" Background="LightGreen"  MinWidth="80"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="卖一价" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=AskPrice1,StringFormat='0.00'}" Background="Pink"  MinWidth="80"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="卖一量" Width="auto">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=AskVolume1,StringFormat='0.'}" Background="Pink" MinWidth="80"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="均价" DisplayMemberBinding="{Binding Path=AveragePrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="最高价" DisplayMemberBinding="{Binding Path=HighestPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="最低价" DisplayMemberBinding="{Binding Path=LowestPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="持仓量" DisplayMemberBinding="{Binding Path=OpenInterest,StringFormat='0.'}" Width="auto"/>
+            <GridViewColumn Header="昨持仓量" DisplayMemberBinding="{Binding Path=PreOpenInterest,StringFormat='0.'}" Width="auto"/>
+            <!--<GridViewColumn Header="涨跌" DisplayMemberBinding="{Binding Path=PriceChange,StringFormat='0.00'}"/>-->
+            <GridViewColumn Header="涨停价" DisplayMemberBinding="{Binding Path=UpperLimitPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="跌停价" DisplayMemberBinding="{Binding Path=LowerLimitPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="昨结算价" DisplayMemberBinding="{Binding Path=PreSettlementPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="昨收盘价" DisplayMemberBinding="{Binding Path=PreClosePrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="今开盘价" DisplayMemberBinding="{Binding Path=OpenPrice,StringFormat='0.00'}" Width="80"/>
+            <GridViewColumn Header="行情更新时间" DisplayMemberBinding="{Binding Path=UpdateTime}" Width="auto"/>
+        </GridView>
+
+        <!--TradeFieldGridView-->
+        <GridView x:Key="TradeFieldGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="买卖">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Direction}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="开平" DisplayMemberBinding="{Binding Path=OffsetFlag}"/>
+            <GridViewColumn Header="成交价格" DisplayMemberBinding="{Binding Path=Price}"/>
+            <GridViewColumn Header="成交手数" DisplayMemberBinding="{Binding Path=Volume}"/>
+            <GridViewColumn Header="成交日期" DisplayMemberBinding="{Binding Path=TradeDate}"/>
+            <GridViewColumn Header="成交时间" DisplayMemberBinding="{Binding Path=TradeTime}"/>
+            <GridViewColumn Header="成交编号" DisplayMemberBinding="{Binding Path=TradeID}"/>
+            <GridViewColumn Header="投保" DisplayMemberBinding="{Binding Path=HedgeFlag}"/>
+        </GridView>
+
+        <!--OrderGridView-->
+        <GridView x:Key="OrderGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="成交编号" DisplayMemberBinding="{Binding Path=TradeID}"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="多空">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Side}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="成交价格" DisplayMemberBinding="{Binding Path=Price}"/>
+            <GridViewColumn Header="成交手数" DisplayMemberBinding="{Binding Path=Qty}"/>
+            <GridViewColumn Header="成交时间" DisplayMemberBinding="{Binding Path=Time}"/>
+            <GridViewColumn Header="开平" DisplayMemberBinding="{Binding Path=OpenClose}"/>
+            <GridViewColumn Header="投保" DisplayMemberBinding="{Binding Path=HedgeFlag}"/>
+        </GridView>
+
+        <!--PositionGridView-->
+        <GridView x:Key="PositionGridView"  ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False" >
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="买卖">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=PosiDirection}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="总仓" DisplayMemberBinding="{Binding Path=TotalPosition}"/>
+            <GridViewColumn Header="今仓" DisplayMemberBinding="{Binding Path=TdPosition}"/>
+            <GridViewColumn Header="昨仓" DisplayMemberBinding="{Binding Path=YdPosition}"/>
+            <GridViewColumn Header="开仓均价" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=AvgOpenPrice, StringFormat='0.00'}" Style="{StaticResource myPriceStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="现价" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=LastPrice, StringFormat='0.00'}" Style="{StaticResource myPriceStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="逐日对冲平仓损益">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=CloseProfitByDate,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="开仓损益">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=OpenProfit,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="持仓损益">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=PositionProfit,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="平仓损益">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=CloseProfit,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="手续费" DisplayMemberBinding="{Binding Path=Commission}"/>
+            <GridViewColumn Header="保证金" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=UseMargin, StringFormat='0.00'}" Style="{StaticResource myPriceStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="投保" DisplayMemberBinding="{Binding Path=HedgeFlag}"/>
+        </GridView>
+
+        <!--【新】DetailPositionGridView-->
+        <GridView x:Key="DetailPositionGridView"  ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False" >
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="买卖">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Direction}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="数量" DisplayMemberBinding="{Binding Path=Volume}"/>
+            <GridViewColumn Header="开仓价" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=OpenPrice, StringFormat='0.00'}" Style="{StaticResource myPriceStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="逐笔对冲平仓盈亏">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=CloseProfitByTrade,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="逐日对冲平仓盈亏">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=CloseProfitByDate,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="逐笔对冲持仓盈亏">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=PositionProfitByTrade,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="逐日盯市持仓盈亏">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=PositionProfitByDate,StringFormat='0.'}" Style="{StaticResource myPnlStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="开仓日" DisplayMemberBinding="{Binding Path=OpenDate}"/>
+            <GridViewColumn Header="保证金" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Margin, StringFormat='0.00'}" Style="{StaticResource myPriceStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="投保" DisplayMemberBinding="{Binding Path=HedgeFlag}"/>
+            <GridViewColumn Header="成交编号" DisplayMemberBinding="{Binding Path=TradeID}"/>
+            <GridViewColumn Header="账户号" DisplayMemberBinding="{Binding Path=InvestorID}"/>
+
+        </GridView>
+
+        <!--【新】OrderFieldGridView-->
+        <GridView x:Key="OrderFieldGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="报单编号" DisplayMemberBinding="{Binding Path=OrderSysID}"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="买卖" Width="50">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Direction}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="开平" DisplayMemberBinding="{Binding Path=CombOffsetFlag}"/>
+            <GridViewColumn Header="投保" DisplayMemberBinding="{Binding Path=CombHedgeFlag}"/>
+
+            <GridViewColumn Header="提交状态" DisplayMemberBinding="{Binding Path=OrderSubmitStatus}"/>
+            <GridViewColumn Header="挂单状态" DisplayMemberBinding="{Binding Path=OrderStatus}"/>
+            <GridViewColumn Header="报单价格" DisplayMemberBinding="{Binding Path=LimitPrice}"/>
+            <GridViewColumn Header="报单量" DisplayMemberBinding="{Binding Path=VolumeTotalOriginal}"/>
+            <GridViewColumn Header="未成交" DisplayMemberBinding="{Binding Path=VolumeTotal}"/>
+            <GridViewColumn Header="成交量" DisplayMemberBinding="{Binding Path=VolumeTraded}"/>
+            <GridViewColumn Header="委托日期" DisplayMemberBinding="{Binding Path=InsertDate}"/>
+            <GridViewColumn Header="委托时间" DisplayMemberBinding="{Binding Path=InsertTime}"/>
+            <GridViewColumn Header="详细状况" DisplayMemberBinding="{Binding Path=StatusMsg}"/>
+            <GridViewColumn Header="时间条件" DisplayMemberBinding="{Binding Path=TimeCondition}"/>
+
+
+        </GridView>
+
+        <!--【新】PriceConditionOrderGridView条件单-->
+        <GridView x:Key="PriceConditionOrderGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False" VirtualizingStackPanel.IsVirtualizing="False">
+            <GridViewColumn Header="运行" Width="auto">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox x:Name="chbPCOIsRunning" VerticalAlignment="Center" Click="chbPCOIsRunning_Click"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="执行状态" DisplayMemberBinding="{Binding Path=ExecutionStatus}" Width="80"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}" Width="60"/>
+            <GridViewColumn Header="符号" Width="60">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox IsReadOnly="True" IsEditable="False" Text="{Binding Path=ExpressionSymbol}">
+                            <ComboBoxItem Content=">" IsSelected="True"/>
+                            <ComboBoxItem Content=">="/>
+                            <ComboBoxItem Content="="/>
+                            <ComboBoxItem Content="&lt;="/>
+                            <ComboBoxItem Content="&lt;"/>
+                        </ComboBox>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="目标价格" Width="auto">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="tbxTargetPrice" Text= "{Binding Path=TargetPrice}" Width="60"/>
+                            <StackPanel Height="20" Width="20">
+                                <Button Height="10" x:Name="btnIncTargetPrice" Click="PCOChangeTargetPrice" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_up.png"/>
+                                </Button>
+                                <Button Height="10" x:Name="btnDecTargetPrice" Click="PCOChangeTargetPrice" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_down.png"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="限价" Width="auto">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="tbxLimitPrice" Text= "{Binding Path=LimitPrice}" Width="60"/>
+                            <StackPanel Height="20" Width="20">
+                                <Button Height="10" x:Name="btnIncLimitPrice" Click="PCOChangeLimitPrice" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_up.png"/>
+                                </Button>
+                                <Button Height="10" x:Name="btnDecLimitPrice" Click="PCOChangeLimitPrice" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_down.png"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="买卖" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox IsReadOnly="False" IsEditable="True" Text="{Binding Path=Direction}">
+                            <ComboBoxItem Content="Buy"/>
+                            <ComboBoxItem Content="Sell"/>
+                        </ComboBox>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="报单手数" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" MinWidth="60">
+                            <TextBox Name="tbxQty" Text= "{Binding Path=VolumeTotalOriginal}" MinWidth="40"/>
+                            <StackPanel Height="20" Width="20">
+                                <Button Height="10" Name="btnIncQty" Click="PCOChangeQty" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_up.png"/>
+                                </Button>
+                                <Button Height="10" Name="btnDecQty" Click="PCOChangeQty" Background="Transparent" BorderThickness="0">
+                                    <Image Source="Images/arrow_down.png"/>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="开平" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox IsReadOnly="False" IsEditable="True" Text="{Binding Path=CombOffsetFlag}">
+                            <ComboBoxItem Content="Open"/>
+                            <ComboBoxItem Content="Close"/>
+                            <ComboBoxItem Content="CloseToday"/>
+                            <ComboBoxItem Content="CloseYesterday"/>
+                            <ComboBoxItem Content="ForceClose"/>
+                            <ComboBoxItem Content="ForceOff"/>
+                            <ComboBoxItem Content="LocalForceClose"/>
+                        </ComboBox>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="报单类型">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox x:Name="cbxOrderPriceType" IsReadOnly="False" IsEditable="True" Text="{Binding Path=OrderPriceType}">
+                            <ComboBoxItem Content="AnyPrice" IsSelected="True"/>
+                            <ComboBoxItem Content="LimitPrice"/>
+                        </ComboBox>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+
+            <!--删除当前行报单-->
+            <GridViewColumn Header="删除">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button x:Name="btnRemovePCO" Content="删除"  MinWidth="30" Click="btnRemovePCO_Click"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+
+        </GridView>
+
+        <!--账户信息GridView-->
+        <GridView x:Key="TradingAccountGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="账户号" DisplayMemberBinding="{Binding Path=AccountID}" />
+            <GridViewColumn Header="经纪公司代码" DisplayMemberBinding="{Binding Path=BrokerID}" />
+            <GridViewColumn Header="可用资金" DisplayMemberBinding="{Binding Path=Available,StringFormat='0.00'}" />
+            <GridViewColumn Header="今日余额" DisplayMemberBinding="{Binding Path=Balance,StringFormat='0.00'}"/>
+            <GridViewColumn Header="昨日余额" DisplayMemberBinding="{Binding Path=PreBalance,StringFormat='0.00'}"/>
+            <GridViewColumn Header="持仓盈亏" DisplayMemberBinding="{Binding Path=PositionProfit,StringFormat='0.00'}"/>
+            <GridViewColumn Header="平仓损益" DisplayMemberBinding="{Binding Path=CloseProfit,StringFormat='0.00'}"/>
+            <GridViewColumn Header="手续费" DisplayMemberBinding="{Binding Path=Commission,StringFormat='0.00'}" />
+            <GridViewColumn Header="占用保证金" DisplayMemberBinding="{Binding Path=CurrMargin,StringFormat='0.00'}"/>
+            <GridViewColumn Header="交易所保证金" DisplayMemberBinding="{Binding Path=ExchangeMargin,StringFormat='0.00'}"/>
+            <GridViewColumn Header="投资者交割保证金" DisplayMemberBinding="{Binding Path=DeliveryMargin,StringFormat='0.00'}"/>
+            <GridViewColumn Header="交易所交割保证金" DisplayMemberBinding="{Binding Path=ExchangeDeliveryMargin,StringFormat='0.00'}"/>
+            <GridViewColumn Header="利息收入" DisplayMemberBinding="{Binding Path=Interest,StringFormat='0.00'}"/>
+            <GridViewColumn Header="质押金额" DisplayMemberBinding="{Binding Path=Mortgage,StringFormat='0.00'}"/>
+            <GridViewColumn Header="上次存款额" DisplayMemberBinding="{Binding Path=PreDeposit,StringFormat='0.00'}"/>
+            <GridViewColumn Header="入金金额" DisplayMemberBinding="{Binding Path=Deposit,StringFormat='0.00'}"/>
+            <GridViewColumn Header="冻结保证金" DisplayMemberBinding="{Binding Path=FrozenMargin,StringFormat='0.00'}"/>
+            <GridViewColumn Header="冻结资金" DisplayMemberBinding="{Binding Path=FrozenCash,StringFormat='0.00'}"/>
+            <GridViewColumn Header="冻结手续费" DisplayMemberBinding="{Binding Path=FrozenCommission,StringFormat='0.00'}"/>
+            <GridViewColumn Header="资金差额" DisplayMemberBinding="{Binding Path=CashIn,StringFormat='0.00'}"/>
+            <GridViewColumn Header="出金" DisplayMemberBinding="{Binding Path=Withdraw,StringFormat='0.00'}"/>
+            <GridViewColumn Header="出金限额" DisplayMemberBinding="{Binding Path=WithdrawQuota,StringFormat='0.00'}"/>
+            <GridViewColumn Header="基本准备金" DisplayMemberBinding="{Binding Path=Reserve,StringFormat='0.00'}"/>
+            <GridViewColumn Header="交易日" DisplayMemberBinding="{Binding Path=TradingDay}"/>
+            <GridViewColumn Header="结算编号" DisplayMemberBinding="{Binding Path=SettlementID}"/>
+            <GridViewColumn Header="上次质押金额" DisplayMemberBinding="{Binding Path=PreMortgage,StringFormat='0.00'}"/>
+            <GridViewColumn Header="信用额度" DisplayMemberBinding="{Binding Path=Credit,StringFormat='0.00'}"/>
+        </GridView>
+
+        <!--OrdersGridView-->
+        <GridView x:Key="OrdersGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Time}"/>
+            <GridViewColumn Header="报单编号" DisplayMemberBinding="{Binding Path=OrderID}" Width="auto"/>
+            <GridViewColumn Header="LocalID" DisplayMemberBinding="{Binding Path=LocalID}"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="买卖" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Side}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="报单手数" DisplayMemberBinding="{Binding Path=Qty}"/>
+            <GridViewColumn Header="未成交手数" DisplayMemberBinding="{Binding Path=LeavesQty}"/>
+            <GridViewColumn Header="开平" DisplayMemberBinding="{Binding Path=OpenClose}"/>
+            <GridViewColumn Header="挂单状态" DisplayMemberBinding="{Binding Path=Status}"/>
+            <GridViewColumn Header="报单价格" DisplayMemberBinding="{Binding Path=Price}"/>
+            <GridViewColumn Header="详细状况" DisplayMemberBinding="{Binding Path=Text}"/>
+            <GridViewColumn Header="交易所" DisplayMemberBinding="{Binding Path=ExchangeID}"/>
+            <GridViewColumn Header="执行状况" DisplayMemberBinding="{Binding Path=ExecType}"/>
+        </GridView>
+
+        <!--OrderItemGridView-->
+        <GridView x:Key="OrderItemGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Path=Date}"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}"/>
+            <GridViewColumn Header="价格" DisplayMemberBinding="{Binding Path=Price}"/>
+            <GridViewColumn Header="买卖" >
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text= "{Binding Path=Dir}" Style="{StaticResource mySideStyle}"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="手数" DisplayMemberBinding="{Binding Path=Lots}"/>
+            <GridViewColumn Header="开平" DisplayMemberBinding="{Binding Path=Offset}"/>
+            <GridViewColumn Header="说明" DisplayMemberBinding="{Binding Path=Remark}"/>
+        </GridView>
+
+        <!--StrategyGridView-->
+        <GridView x:Key="StrategyGridView" ColumnHeaderTemplate="{StaticResource myHeaderTemplate}" x:Shared="False">
+            <GridViewColumn Header="交易中" Width="80">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox x:Name="chbStrategyIsTrading" HorizontalAlignment="Center" Click="chbStrategyIsTrading_Click"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="策略名称" DisplayMemberBinding="{Binding Path=Name}" Width="auto"/>
+            <GridViewColumn Header="合约" DisplayMemberBinding="{Binding Path=InstrumentID}" Width="100"/>
+            <GridViewColumn Header="周期数" DisplayMemberBinding="{Binding Path=Interval}" Width="80"/>
+            <GridViewColumn Header="周期类型" DisplayMemberBinding="{Binding Path=IntervalType}" Width="80"/>
+          
+        </GridView>
+
+    </Window.Resources>
+    
+    <Grid ShowGridLines="True" Margin="5" UseLayoutRounding="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" MinHeight="100"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition MinHeight="100" MaxHeight="250"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition MinHeight="100" MaxHeight="250"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <GridSplitter Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="3"/>
+        <GridSplitter Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="3"/>
+        <GridSplitter Grid.Column="1" Grid.RowSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="3"/>
+
+
+
+        <!--行情数据显示-->
+        <TabControl Grid.Row="2" Grid.Column="0" x:Name="tcDepthMarketData"  Style="{StaticResource myTabControlStyle}" SelectionChanged="tcMarketDepthData_SelectionChanged">
+            <TabItem Header="全&#13;部&#13;合&#13;约" x:Name="tiAllDepthMarketData">
+                <ListView x:Name="lvAllMarketData" View="{StaticResource MarketDataGridView}"
+                           GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+            <TabItem Header="主&#13;力&#13;合&#13;约" x:Name="tiMainDepthMarketData">
+                <ListView x:Name="lvMainMarketData" View="{StaticResource MarketDataGridView}"
+                          GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+        </TabControl>
+
+        <!--交易查单显示-->
+        <TabControl Grid.Row="4" Grid.Column="0" x:Name="tabOrders" Style="{StaticResource myTabControlStyle}">
+            <TabItem Header="所&#13;有&#13;报&#13;单" IsSelected="True">
+                <ListView x:Name="lvAllOrderField" View="{StaticResource OrderFieldGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+            <TabItem Header="撤&#13;单&#13;">
+                <ListView x:Name="lvCanceledOrder" View="{StaticResource OrderFieldGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+            <TabItem Header="错&#13;单&#13;">
+                <ListView x:Name="lvErrorOrder" View="{StaticResource OrderFieldGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+        </TabControl>
+
+
+        <!--成交记录和持仓查询显示-->
+        <TabControl x:Name="tcInvestorPosition" Grid.Row="6" Grid.Column="0" Style="{StaticResource myTabControlStyle}" >
+            <TabItem Header="持&#13;仓">
+                <ListView x:Name="lvAllPosition" View="{StaticResource PositionGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+            <TabItem Header="持&#13;仓&#13;明&#13;细">
+                <ListView x:Name="lvAllDetailPositionField" View="{StaticResource DetailPositionGridView}" 
+                          GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+        </TabControl>
+        
+        <!--条件单-->
+        <TabControl Grid.Row="4" Grid.Column="2" Style="{StaticResource myTabControlStyle}">
+            <!--条件单板-->
+            <TabItem Header="价&#13;格&#13;条&#13;件&#13;单">
+                <ListView x:Name="lvAllPriceConditionOrderField" View="{StaticResource PriceConditionOrderGridView}"
+                          GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+            <!--OrderItem-->
+            <TabItem Header="策&#13;略&#13;交&#13;易&#13;情&#13;况">
+                <ListView x:Name="lvAllOrderItem" Grid.Row="2" View="{StaticResource OrderItemGridView}"/>
+            </TabItem>
+        </TabControl>
+        
+        <!--当前挂单和成交单-->
+        <TabControl Grid.Row="6" Grid.Column="2" Style="{StaticResource myTabControlStyle}">
+            <!--当前挂单-->
+            <TabItem Header="当&#13;前&#13;挂&#13;单">
+                <ListView x:Name="lvNoTradeOrder" View="{StaticResource OrderFieldGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"
+                          MouseDoubleClick="lvNoTradeOrder_MouseDoubleClick"/>
+            </TabItem>
+            <!--成交单-->
+            <TabItem Header="成&#13;交&#13;单">
+                <ListView x:Name="lvAllTradeField" Grid.Column="0" View="{StaticResource TradeFieldGridView}" GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>
+
+            <!--条件单板--><!--
+            <TabItem Header="条&#13;件&#13;单">
+                <ListView Grid.Column="0" x:Name="lvConditionOrderField" View="{StaticResource ConditionOrderGridView}"
+                          GridViewColumnHeader.Click="GridViewColumnHeader_Click"/>
+            </TabItem>-->
+        </TabControl>
+
+        <!--策略载入-->
+        <TabControl Grid.Row="2" Grid.Column="2" x:Name="tabCTADailyStrategy" Style="{StaticResource myTabControlStyle}">
+            <TabItem Header="策&#13;略&#13;信&#13;息" IsSelected="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--选择策略添加-->
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="3">
+                        <Button x:Name="btnLoadStrategyFile" Content="加载策略文件" Click="btnLoadStrategyFile_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="3" Margin="0,0,10,0"/>
+                        <Label Content="策略名称" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cbxStrategyName" IsEditable="False" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="合约" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cbxStrategyInstrumentID" IsReadOnly="False" IsEditable="True" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="周期数" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cbxStrategyInterval" IsEditable="True" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="5"/>
+                            <ComboBoxItem Content="10"/>
+                            <ComboBoxItem Content="15"/>
+                            <ComboBoxItem Content="30"/>
+                        </ComboBox>
+                        <Label Content="周期" Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cbxStrategyIntervalType" IsEditable="False" Width="60" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ComboBoxItem Content="Sec"/>
+                            <ComboBoxItem Content="Min"/>
+                            <ComboBoxItem Content="Hour"/>
+                            <ComboBoxItem Content="Day"/>
+                            <ComboBoxItem Content="Week"/>
+                            <ComboBoxItem Content="Month"/>
+                            <ComboBoxItem Content="Year"/>
+                        </ComboBox>
+                        <Button x:Name="btnAddStrategy" Content="添加" Click="btnAddStrategy_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <Button x:Name="btnRemoveStrategy" Content="删除" Click="btnRemoveStrategy_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <!--StrategyListView-->
+                    <ListView Grid.Row="1" x:Name="lvAllStrategy" View="{StaticResource StrategyGridView}"
+                              MouseDoubleClick="lvAllStrategy_MouseDoubleClick"/>
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+   
+        <!--菜单-->
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" MinHeight="30" Orientation="Horizontal">
+            <Menu>
+                <MenuItem Header="系统" Margin="5">
+                    <MenuItem Header="登录" Name="btnSystem_Login" Click="btnSystem_Login_Click"/>
+                </MenuItem>
+                <MenuItem Header="工具" Margin="5">
+                    <MenuItem Header="下单板" Name="btnOutil_OrderPanel" Click="btnOutil_OrderPanel_Click"/>
+                </MenuItem>
+                <MenuItem Header="数据库" Margin="5" >
+                    <MenuItem Header="写入CSV文件"/>
+                    <MenuItem Header="数据库维护"/>
+                </MenuItem>
+            </Menu>
+            <ToolBar>
+                <ToggleButton x:Name="tgbDownloadTick" Content="下载数据" Checked="tgbDownloadTick_Checked" Unchecked="tgbDownloadTick_Unchecked"/>
+                <Separator/>
+                <Button x:Name="btnQryTradingAccount" Content="查询交易账户" Click="btnQryTradingAccount_Click"/>
+                <Separator/>
+                <Button x:Name="btnQryInvestorPosition" Content="查询持仓" Click="btnQryInvestorPosition_Click"/>
+                <Separator/>
+                <Button x:Name="btnUnsubscribe" Content="取消订阅"/>
+            </ToolBar>
+        </StackPanel>
+
+        <!--显示组合金额方面的信息-->
+        <StackPanel Grid.Row="1" MinHeight="45" Grid.ColumnSpan="3" Background="#FFEEF7FE" >
+            <ListView x:Name="lvAllTradingAccount" View="{StaticResource TradingAccountGridView}" 
+                      ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>
+        </StackPanel>
+
+        <!--状态栏-->
+        <StatusBar Grid.Row="7" Grid.ColumnSpan="3" Height="30" Background="#FFFF6F02" >
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="行情连接状态：" Foreground="White" Grid.Column="0"/>
+                    <Label Name="lblQuoteAPIConnectionStatus" Foreground="White" MinWidth="100"/>
+                    <Label Content="交易连接状态：" Foreground="White" Grid.Column="0"/>
+                    <Label Name="lblTradeAPIConnectionStatus" Foreground="White" MinWidth="100"/>
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="已写入记录数：" Foreground="White"/>
+                    <Label Name="lblTickRecorded" Content="0" Foreground="White" MinWidth="100"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
