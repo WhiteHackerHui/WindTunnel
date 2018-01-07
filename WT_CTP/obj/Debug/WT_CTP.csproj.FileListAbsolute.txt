@@ -11,3 +11,16 @@ E:\WindTunnel\WT_CTP\bin\Debug\WT_Core.pdb
 E:\WindTunnel\WT_CTP\obj\Debug\WT_CTP.dll
 E:\WindTunnel\WT_CTP\obj\Debug\WT_CTP.pdb
 E:\WindTunnel\WT_CTP\obj\Debug\WT_CTP.csproj.CoreCompileInputs.cache
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\WT_CTP.dll
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\WT_CTP.pdb
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\Proxy.dll
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\WT_Core.dll
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\Proxy.pdb
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\Proxy.xml
+D:\Repos\WindTunnel\WT_CTP\bin\Debug\WT_Core.pdb
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.Properties.Resources.resources
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.csproj.GenerateResource.Cache
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.csproj.CoreCompileInputs.cache
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.dll
+D:\Repos\WindTunnel\WT_CTP\obj\Debug\WT_CTP.pdb

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\WindTunnel\WindTunnel\obj\Debug\
+D:\Repos\WindTunnel\WindTunnel\obj\Debug\
 WindTunnel
 none
 false
 DEBUG;TRACE
-E:\WindTunnel\WindTunnel\App.xaml
+D:\Repos\WindTunnel\WindTunnel\App.xaml
 3-1638464959
 
 21-2129956656
-16-1322236333
+16-343801982
 AppResourceDictionary.xaml;LoginWindow.xaml;MainWindow.xaml;
 
-False
+True
 

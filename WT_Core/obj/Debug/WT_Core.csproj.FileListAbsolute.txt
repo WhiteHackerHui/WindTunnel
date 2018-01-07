@@ -7,3 +7,7 @@ E:\WindTunnel\WT_Core\obj\Debug\WT_Core.csprojResolveAssemblyReference.cache
 E:\WindTunnel\WT_Core\obj\Debug\WT_Core.dll
 E:\WindTunnel\WT_Core\obj\Debug\WT_Core.pdb
 E:\WindTunnel\WT_Core\obj\Debug\WT_Core.csproj.CoreCompileInputs.cache
+D:\Repos\WindTunnel\WT_Core\obj\Debug\WT_Core.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\WT_Core\obj\Debug\WT_Core.dll
+D:\Repos\WindTunnel\WT_Core\obj\Debug\WT_Core.pdb
+D:\Repos\WindTunnel\WT_Core\obj\Debug\WT_Core.csproj.CoreCompileInputs.cache

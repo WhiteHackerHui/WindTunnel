@@ -6,3 +6,8 @@ E:\WindTunnel\Proxy\obj\Debug\Proxy.csproj.GenerateResource.Cache
 E:\WindTunnel\Proxy\obj\Debug\Proxy.dll
 E:\WindTunnel\Proxy\obj\Debug\Proxy.pdb
 E:\WindTunnel\Proxy\obj\Debug\Proxy.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\Proxy\obj\Debug\Proxy.csprojResolveAssemblyReference.cache
+D:\Repos\WindTunnel\Proxy\obj\Debug\HaiFeng.Properties.Resources.resources
+D:\Repos\WindTunnel\Proxy\obj\Debug\Proxy.csproj.GenerateResource.Cache
+D:\Repos\WindTunnel\Proxy\obj\Debug\Proxy.dll
+D:\Repos\WindTunnel\Proxy\obj\Debug\Proxy.pdb

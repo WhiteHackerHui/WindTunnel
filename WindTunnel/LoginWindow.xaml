@@ -55,7 +55,7 @@
                 <CheckBox x:Name="chxIsConfirmSettlementInfo" Grid.Row="3" Grid.Column="4" Content="是否确认结算信息?" IsChecked="False" VerticalAlignment="Center"/>
                 <!--用户设置-->
                 <Label Grid.Row="4" Grid.Column="0" Content="用户名"/>
-                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbxInvestorID"/>
+                <ComboBox Grid.Row="4" Grid.Column="1" x:Name="cbxInvestorID" />
                 <Label Grid.Row="4" Grid.Column="3" Content="密码"/>
                 <ComboBox Grid.Row="4" Grid.Column="4" x:Name="cbxPassword"/>
                 

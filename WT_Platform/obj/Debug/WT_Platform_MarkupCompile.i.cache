@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-E:\WindTunnel\WT_Platform\obj\Debug\
+D:\Repos\WindTunnel\WT_Platform\obj\Debug\
 WT_Platform
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 4-85393030
 
 15-981280335
-80601184391
+80-1439011045
 App.xaml;LoginWindow.xaml;MainWindow.xaml;OrderPanelWindow.xaml;
 
 True

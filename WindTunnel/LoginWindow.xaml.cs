@@ -245,15 +245,6 @@ namespace WindTunnel
                     QuoteIP = "180.168.146.187",
                     QuotePort = 10031,
                 });
-                list.Add(new FutureBroker
-                {
-                    Name = "实盘 东证期货",
-                    Broker = "3040",
-                    TradeIP = "180.169.85.204",
-                    TradePort = 41205,
-                    QuoteIP = "180.169.85.204",
-                    QuotePort = 41213,
-                });
                 File.WriteAllText(ServerPath, JsonConvert.SerializeObject(list),Encoding.Default);
             }
             return list;
@@ -272,11 +263,7 @@ namespace WindTunnel
                     InvestorID = "062649",
                     Password = "12345",
                 });
-                list.Add(new Investor
-                {
-                    InvestorID = "88708980",
-                    Password = "021564",
-                });
+               
                 File.WriteAllText(InvestorPath, JsonConvert.SerializeObject(list),Encoding.Default);
             }
             return list;
@@ -323,5 +310,6 @@ namespace WindTunnel
             }
             
         }
+
     }
 }
