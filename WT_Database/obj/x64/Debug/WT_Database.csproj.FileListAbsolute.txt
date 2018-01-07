@@ -1,0 +1,16 @@
+E:\WindTunnel\WT_Database\bin\x64\Debug\WT_Database.exe.config
+E:\WindTunnel\WT_Database\bin\x64\Debug\WT_Database.exe
+E:\WindTunnel\WT_Database\bin\x64\Debug\WT_Database.pdb
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Bson.dll
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Driver.Core.dll
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Driver.dll
+E:\WindTunnel\WT_Database\bin\x64\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\WindTunnel\WT_Database\bin\x64\Debug\WT_Core.dll
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Bson.xml
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Driver.xml
+E:\WindTunnel\WT_Database\bin\x64\Debug\MongoDB.Driver.Core.xml
+E:\WindTunnel\WT_Database\bin\x64\Debug\WT_Core.pdb
+E:\WindTunnel\WT_Database\obj\x64\Debug\WT_Database.csprojResolveAssemblyReference.cache
+E:\WindTunnel\WT_Database\obj\x64\Debug\WT_Database.exe
+E:\WindTunnel\WT_Database\obj\x64\Debug\WT_Database.pdb
+E:\WindTunnel\WT_Database\obj\x64\Debug\WT_Database.csproj.CoreCompileInputs.cache

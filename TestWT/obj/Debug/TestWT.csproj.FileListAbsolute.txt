@@ -1,0 +1,1 @@
+E:\WindTunnel\TestWT\obj\Debug\TestWT.csprojResolveAssemblyReference.cache

@@ -1,0 +1,9 @@
+E:\WindTunnel\WT_Core\bin\Debug\WT_Core.dll
+E:\WindTunnel\WT_Core\bin\Debug\WT_Core.pdb
+E:\WindTunnel\WT_Core\bin\Debug\Proxy.dll
+E:\WindTunnel\WT_Core\bin\Debug\Proxy.pdb
+E:\WindTunnel\WT_Core\bin\Debug\Proxy.xml
+E:\WindTunnel\WT_Core\obj\Debug\WT_Core.csprojResolveAssemblyReference.cache
+E:\WindTunnel\WT_Core\obj\Debug\WT_Core.dll
+E:\WindTunnel\WT_Core\obj\Debug\WT_Core.pdb
+E:\WindTunnel\WT_Core\obj\Debug\WT_Core.csproj.CoreCompileInputs.cache
