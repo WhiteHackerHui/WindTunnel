@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WT_Core", "WT_Core\WT_Core.csproj", "{0196CD68-0500-4E76-B2E8-DFCFA6EA9406}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -165,5 +165,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16A83F66-2F44-4681-8AFF-60C7620E01B6}
 	EndGlobalSection
 EndGlobal
