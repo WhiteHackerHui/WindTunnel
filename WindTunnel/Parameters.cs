@@ -9,9 +9,9 @@ namespace WindTunnel
     public static class Parameters
     {
         //行情和交易参数
-        static public string[] InvestorIDs { get { return new string[] { "062649"}; } }
-        static public string[] Passwords { get { return new string[] { "12345" }; } }
-        static public string[] BrokerIDs { get { return new string[] { "9999" }; } }
+        static public string[] InvestorIDs { get { return new string[] { ""}; } }
+        static public string[] Passwords { get { return new string[] { "" }; } }
+        static public string[] BrokerIDs { get { return new string[] { "" }; } }
         static public Dictionary<string,Tuple<string,string>> FrontAddress
         {
             get

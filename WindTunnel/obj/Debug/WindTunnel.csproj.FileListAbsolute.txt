@@ -47,3 +47,4 @@ D:\Repos\WindTunnel\WindTunnel\obj\Debug\WindTunnel.csproj.GenerateResource.Cach
 D:\Repos\WindTunnel\WindTunnel\obj\Debug\WindTunnel.csproj.CoreCompileInputs.cache
 D:\Repos\WindTunnel\WindTunnel\obj\Debug\WindTunnel.exe
 D:\Repos\WindTunnel\WindTunnel\obj\Debug\WindTunnel.pdb
+D:\Repos\WindTunnel\WindTunnel\obj\Debug\WindTunnel.csprojResolveAssemblyReference.cache

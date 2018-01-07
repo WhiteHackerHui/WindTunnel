@@ -258,12 +258,6 @@ namespace WindTunnel
                 list = JsonConvert.DeserializeObject<List<Investor>>(File.ReadAllText(InvestorPath, Encoding.Default));
             else
             {
-                list.Add(new Investor
-                {
-                    InvestorID = "062649",
-                    Password = "12345",
-                });
-               
                 File.WriteAllText(InvestorPath, JsonConvert.SerializeObject(list),Encoding.Default);
             }
             return list;
